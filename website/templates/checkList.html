@@ -1,0 +1,99 @@
+{%extends "base.html" %} {% block title %} CheckList {% endblock %} {%block
+content%}
+<br />
+<h1 align="center">Checklist</h1>
+<br />
+<h3 align="center">Percentage Of Checklist Items Complete</h3>
+<div class="progress">
+  {% if todo != 0 %}
+  <div
+    class="progress-bar progress-bar-striped"
+    role="progressbar"
+    aria-valuenow="{{perdone}}"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    style="width: {{perdone}}%;
+    animation: progress-bar-stripes 2s linear infinite;
+      animation-duration: 2s;
+      animation-timing-function: linear;
+      animation-delay: 0s;
+      animation-iteration-count: infinite;
+      animation-direction: normal;
+      animation-fill-mode: none;
+      animation-play-state: running;
+      animation-name: progress-bar-stripes;"
+  >
+    {{perdone}}% Complete {% if todo != 0 %} - Only {{todo}} to Complete {%
+    endif %}
+  </div>
+  {% else %}
+  <div
+    class="progress-bar progress-bar-success progress-bar-striped"
+    role="progressbar"
+    aria-valuenow="{{perdone}}"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    style="width: {{perdone}}%;
+    background-color: #5cb85c;
+  animation: progress-bar-stripes 2s linear infinite;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-play-state: running;
+    animation-name: progress-bar-stripes;"
+  >
+    {{perdone}}% Complete {% if todo != 0 %} - Only {{todo}} to Complete {%
+    endif %}
+  </div>
+  {% endif %}
+</div>
+<br />
+<ul class="list-group list-group-flush" id="item">
+  {% for item in user.checklistItems %}
+  <li class="list-group-item">
+    <h4>
+      {% if item.done %}
+      <button
+        type="button"
+        class="badge badge-success"
+        onClick="changeCheckItemState({{ item.id }})"
+      >
+        <span aria-hidden="true">✔</span>
+      </button>
+      {% else %}
+      <button
+        type="button"
+        class="badge badge-danger"
+        onClick="changeCheckItemState({{ item.id }})"
+      >
+        <span aria-hidden="true">❌</span>
+      </button>
+      {% endif %} {{item.data}}
+
+      <button
+        type="button"
+        class="close"
+        onClick="deleteCheckItem({{ item.id }})"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </h4>
+  </li>
+  {% endfor %}
+</ul>
+<form method="POST">
+  <br />
+  <h3 align="center">New Checklist Item</h3>
+  <textarea name="item" id="item" class="form-control"></textarea>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Checklist Item</button>
+  </div>
+</form>
+
+<br />
+
+{%endblock%}

@@ -1,8 +1,9 @@
 {%extends "base.html" %} {% block title %} DashBoard {% endblock %} {%block
 content%}
 <br></br>
-<h1 align="center"> Notes</h1>
+<h1 align="center">Notes</h1>
 <ul class="list-group list-group-flush" id="notes">
+  <h5>
     {% for note in user.notes %}
     <li class="list-group-item">{{note.data}}
         <button type="button" class="close" onClick="deleteNote({{ note.id }})">
@@ -10,8 +11,11 @@ content%}
         </button>
     </li>
     {% endfor %}
+  </h5>
 </ul>
 <form method="POST">
+  <br />
+  <h3 align="center"> New Note </h3>
   <textarea name="note" id="note" class="form-control"></textarea>
   <br />
   <div align="center">
